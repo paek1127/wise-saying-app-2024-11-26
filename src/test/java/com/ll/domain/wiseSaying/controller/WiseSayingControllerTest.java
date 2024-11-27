@@ -25,4 +25,22 @@ public class WiseSayingControllerTest {
         assertThat(output.toString())
                 .contains("== 명언 앱 ==");
     }
+
+    @Test
+    @DisplayName("명령) ")
+    public void t2() {
+        Scanner scanner = TestUtil.getScanner("""
+                목록
+                종료
+                """);
+        ByteArrayOutputStream output = TestUtil.setOutToByteArray();
+
+        App app = new App(scanner);
+        app.run();
+
+        TestUtil.clearSetOutToByteArray(output);
+
+        assertThat(output.toString())
+                .contains("명령) ");
+    }
 }
