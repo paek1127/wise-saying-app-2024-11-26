@@ -16,10 +16,13 @@ public class WiseSayingRepository {
     }
 
     public WiseSaying save(WiseSaying wiseSaying) {
-        if (wiseSaying.getId() != 0) {
+        // 메모리 저장 특성상 새 객체가 아니라면 딱히 할게 없다.
+        if (!wiseSaying.isNew()) {
             return wiseSaying;
         }
 
+        // 새 객체라면 id를 부여하고 저장한다.
+        // 저장위치 : 메모리(wiseSayings)
         wiseSaying.setId(++lastId);
         wiseSayings.add(wiseSaying);
         return wiseSaying;
