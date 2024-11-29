@@ -32,5 +32,6 @@ public class App {
                 wiseSayingController.actionList();
             }
         }
+        scanner.close();
     }
 }
