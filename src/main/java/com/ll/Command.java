@@ -8,11 +8,14 @@ public class Command {
     private final Map<String, String> params;
 
     public Command(String cmd) {
-        String[] cmdBits = cmd.trim().split("\\?");
-        this.actionName = cmdBits[0];
+        String[] cmdBits = cmd.trim().split("\\?",2);
+        this.actionName = cmdBits[0].trim();
         this.params = new HashMap<>();
 
-        String queryString = cmdBits[1];
+        if (cmdBits.length == 1) return;
+
+        String queryString = cmdBits[1].trim();
+
         String[] params = queryString.split("&");
 
         for (String param : params) {
