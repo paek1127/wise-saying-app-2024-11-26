@@ -105,6 +105,6 @@ public class WiseSayingControllerTest {
                 """);
 
         assertThat(output)
-                .contains("1번 명언은 존재하지 않습니다.");
+                .contains("3번 명언은 존재하지 않습니다.");
     }
 }
