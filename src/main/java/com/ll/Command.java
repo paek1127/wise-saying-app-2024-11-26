@@ -1,16 +1,31 @@
 package com.ll;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Command {
     private final String actionName;
-    private final String queryString;
+    private final Map<String, String> params;
 
     public Command(String cmd) {
         String[] cmdBits = cmd.trim().split("\\?");
         this.actionName = cmdBits[0];
-        this.queryString = cmdBits.length > 1 ? cmdBits[1] : "";
+        this.params = new HashMap<>();
+
+        String queryString = cmdBits[1];
+        String[] params = queryString.split("&");
+
+        for (String param : params) {
+            String[] paramBits = param.split("=",2);
+            this.params.put(paramBits[0], paramBits[1]);
+        }
     }
 
     public String getActionName() {
         return actionName;
+    }
+
+    public String getParam(String key) {
+        return params.get(key);
     }
 }
