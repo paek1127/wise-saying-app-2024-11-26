@@ -1,14 +1,26 @@
 package com.ll.standard.util;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class UtilTest {
+    @BeforeAll
+    public static void beforeAll() {
+        Util.file.mkdir("temp");
+    }
+
+    @AfterAll
+    public static void afterAll() {
+        Util.file.rmdir("temp");
+    }
+
     @Test
     public void createFile() {
         // given
-        String filePath = "test.txt";
+        String filePath = "temp/test.txt";
 
         // when
         Util.file.touch(filePath);
@@ -20,7 +32,7 @@ public class UtilTest {
     @Test
     public void modifyFile() {
         // given
-        String filePath = "test.txt";
+        String filePath = "temp/test.txt";
 
         // when
         Util.file.set(filePath, "내용");
@@ -34,7 +46,7 @@ public class UtilTest {
     @Test
     public void deleteFile() {
         // given
-        String filePath = "test.txt";
+        String filePath = "temp/test.txt";
 
         // when
         Util.file.touch(filePath);
