@@ -16,4 +16,18 @@ public class UtilTest {
         // then
         assertThat(Util.file.exists(filePath)).isTrue();
     }
+
+    @Test
+    public void modifyFile() {
+        // given
+        String filePath = "test.txt";
+
+        // when
+        Util.file.set(filePath, "내용");
+
+        // then
+        assertThat(
+                Util.file.get(filePath, "")
+        ).isEqualTo("내용");
+    }
 }
