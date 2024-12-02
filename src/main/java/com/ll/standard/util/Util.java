@@ -114,8 +114,20 @@ public class Util {
 
             map.forEach((key, value) -> {
                sb.append("    ");
-               sb.append("\"%s\": \"%s\"".formatted(key,value));
+               key = "\"" + key + "\"";
+
+               if (value instanceof String) {
+                   value = "\"" + value + "\"";
+               }
+
+               sb.append("%s: %s,\n".formatted(key,value));
             });
+
+            if (!map.isEmpty()){
+                // 맨 마지막의 , 줄바꿈 을 제거
+                sb.delete(sb.length() - 2, sb.length());
+            }
+
             sb.append("\n");
             sb.append("}");
 
