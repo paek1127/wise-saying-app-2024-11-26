@@ -1,9 +1,11 @@
 package com.ll.domain.wiseSaying.repository;
 
 import com.ll.domain.wiseSaying.entity.WiseSaying;
+import com.ll.standard.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class WiseSayingFileRepository implements WiseSayingRepository {
@@ -21,10 +23,13 @@ public class WiseSayingFileRepository implements WiseSayingRepository {
             return wiseSaying;
         }
 
-        // 새 객체라면 id를 부여하고 저장한다.
-        // 저장위치 : 메모리(wiseSayings)
         wiseSaying.setId(++lastId);
-        wiseSayings.add(wiseSaying);
+
+        Map<String, Object> wiseSayingMap = wiseSaying.toMap();
+        String jsonStr = Util.json.toString(wiseSayingMap);
+
+        Util.file.set("db/test/wiseSaying/1.json", jsonStr);
+
         return wiseSaying;
     }
 
