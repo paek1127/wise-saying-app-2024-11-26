@@ -56,4 +56,46 @@ public class JsonUtilTest {
                 }
                 """.stripIndent().trim());
     }
+
+    @Test
+    public void mapToJsonDouble() {
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("id", 1);
+        map.put("name", "이름");
+        map.put("gender", "남자");
+        map.put("height", 178.1543221);
+
+        String jsonStr = Util.json.toString(map);
+
+        assertThat(jsonStr).isEqualTo("""
+                {
+                    "id": 1,
+                    "name": "이름",
+                    "gender": "남자",
+                    "height": 178.1543221
+                }
+                """.stripIndent().trim());
+    }
+
+    @Test
+    public void mapToJsonBoolean() {
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("id", 1);
+        map.put("name", "이름");
+        map.put("gender", "남자");
+        map.put("height", 178.1543221);
+        map.put("married", true);
+
+        String jsonStr = Util.json.toString(map);
+
+        assertThat(jsonStr).isEqualTo("""
+                {
+                    "id": 1,
+                    "name": "이름",
+                    "gender": "남자",
+                    "height": 178.1543221,
+                    "married": true
+                }
+                """.stripIndent().trim());
+    }
 }
