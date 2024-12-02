@@ -26,7 +26,9 @@ public class UtilTest {
         Util.file.touch(filePath);
 
         // then
-        assertThat(Util.file.exists(filePath)).isTrue();
+        assertThat(
+                Util.file.exists(filePath)
+        ).isTrue();
     }
 
     @Test
@@ -55,6 +57,20 @@ public class UtilTest {
         // then
         assertThat(
                 Util.file.notExists(filePath)
+        ).isTrue();
+    }
+
+    @Test
+    public void createDirFile() {
+        // given
+        String filePath = "temp/temp/test.txt";
+
+        // when
+        Util.file.touch(filePath);
+
+        // then
+        assertThat(
+                Util.file.exists(filePath)
         ).isTrue();
     }
 }
