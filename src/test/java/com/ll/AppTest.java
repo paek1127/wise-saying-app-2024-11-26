@@ -1,5 +1,7 @@
 package com.ll;
 
+import com.ll.domain.wiseSaying.repository.WiseSayingFileRepository;
+import com.ll.domain.wiseSaying.repository.WiseSayingRepository;
 import com.ll.standard.util.TestUtil;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -55,5 +57,9 @@ public class AppTest {
         TestUtil.clearSetOutToByteArray(outputStream);
 
         return output;
+    }
+
+    public static void dropTables() {
+        WiseSayingFileRepository.dropTable();
     }
 }
