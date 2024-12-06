@@ -64,4 +64,18 @@ public class WiseSayingFileRepositoryTest {
                 opWiseSaying.get()
         ).isEqualTo(wiseSaying);
     }
+
+    @Test
+    @DisplayName("명언 다건 조회")
+    public void t4() {
+        WiseSaying wiseSaying1 = new WiseSaying(0, "명언1", "저자1");
+        wiseSayingRepository.save(wiseSaying1);
+
+        WiseSaying wiseSaying2 = new WiseSaying(0, "명언2", "저자2");
+        wiseSayingRepository.save(wiseSaying2);
+
+        assertThat(
+                wiseSayingRepository.findAll()
+        ).containsExactlyInAnyOrder(wiseSaying1,wiseSaying2);
+    }
 }
