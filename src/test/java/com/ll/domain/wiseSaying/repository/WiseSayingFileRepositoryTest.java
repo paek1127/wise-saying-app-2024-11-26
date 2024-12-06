@@ -2,10 +2,7 @@ package com.ll.domain.wiseSaying.repository;
 
 import com.ll.domain.wiseSaying.entity.WiseSaying;
 import com.ll.standard.util.Util;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.Map;
 
@@ -14,15 +11,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class WiseSayingFileRepositoryTest {
     private final WiseSayingRepository wiseSayingRepository = new WiseSayingFileRepository();
 
-    @BeforeAll
-    public static void beforeAll() {
-        Util.file.rmdir("db");
-        Util.file.mkdir("db");
+    @BeforeEach
+    public void beforeEach() {
+        Util.file.rmdir(WiseSayingFileRepository.getTableDirPath());
     }
 
-    @AfterAll
-    public static void afterAll() {
-//        Util.file.rmdir("db");
+    @AfterEach
+    public void afterEach() {
+        Util.file.rmdir(WiseSayingFileRepository.getTableDirPath());
     }
 
     @Test
@@ -31,7 +27,7 @@ public class WiseSayingFileRepositoryTest {
         WiseSaying wiseSaying = new WiseSaying(0, "명언1", "저자1");
         wiseSayingRepository.save(wiseSaying);
 
-        String filePath = "db/test/wiseSaying/1.json";
+        String filePath = WiseSayingFileRepository.getRowFilePath(wiseSaying.getId());
 
         assertThat(
                 Util.file.exists(filePath)
@@ -46,5 +42,20 @@ public class WiseSayingFileRepositoryTest {
         System.out.println(wiseSaying);
 
         assertThat(wiseSayingRestored).isEqualTo(wiseSaying);
+    }
+
+    @Test
+    @DisplayName("명언 삭제")
+    public void t2() {
+        WiseSaying wiseSaying = new WiseSaying(0, "명언1", "저자1");
+        wiseSayingRepository.save(wiseSaying);
+
+        wiseSayingRepository.deleteById(wiseSaying.getId());
+
+        String filePath = WiseSayingFileRepository.getRowFilePath(wiseSaying.getId());
+
+        assertThat(
+                Util.file.exists(filePath)
+        ).isFalse();
     }
 }
