@@ -89,4 +89,22 @@ public class WiseSayingFileRepositoryTest {
 
         assertThat(lastId).isEqualTo(wiseSaying1.getId());
     }
+
+    @Test
+    @DisplayName("명언 수정")
+    public void t6() {
+        WiseSaying wiseSaying = new WiseSaying(0, "명언1", "저자1");
+        wiseSayingRepository.save(wiseSaying);
+
+        wiseSaying.setContent("수정내용1");
+        wiseSaying.setAuthor("수정저자1");
+
+        wiseSayingRepository.save(wiseSaying);
+
+        Optional<WiseSaying> opWiseSaying = wiseSayingRepository.findById(wiseSaying.getId());
+
+        assertThat(
+                opWiseSaying.get()
+        ).isEqualTo(wiseSaying);
+    }
 }
