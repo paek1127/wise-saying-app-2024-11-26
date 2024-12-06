@@ -12,8 +12,6 @@ import java.util.Map;
 import java.util.Optional;
 
 public class WiseSayingFileRepository implements WiseSayingRepository {
-    private int lastId;
-
     public static String getTableDirPath() {
         return "db/test/wiseSaying";
     }
@@ -22,20 +20,26 @@ public class WiseSayingFileRepository implements WiseSayingRepository {
         return getTableDirPath() + "/" + id + ".json";
     }
 
+    public static String getLastIdPath() {
+        return getTableDirPath() + "/lastId.txt";
+    }
+
     public WiseSaying save(WiseSaying wiseSaying) {
         // 메모리 저장 특성상 새 객체가 아니라면 딱히 할게 없다.
         if (!wiseSaying.isNew()) {
             return wiseSaying;
         }
 
-        wiseSaying.setId(
-                findAll().size() + 1
-        );
+        int id = getLastId() + 1;
+
+        wiseSaying.setId(id);
 
         Map<String, Object> wiseSayingMap = wiseSaying.toMap();
         String jsonStr = Util.json.toString(wiseSayingMap);
 
         Util.file.set(getRowFilePath(wiseSaying.getId()), jsonStr);
+
+        setLastId(id);
 
         return wiseSaying;
     }
@@ -76,5 +80,13 @@ public class WiseSayingFileRepository implements WiseSayingRepository {
         Map<String, Object> wiseSayingMap = Util.json.toMap(jsonStr);
 
         return Optional.of(new WiseSaying(wiseSayingMap));
+    }
+
+    public int getLastId() {
+        return Util.file.getAsInt(getLastIdPath(), 0);
+    }
+
+    private void setLastId(int id) {
+        Util.file.set(getLastIdPath(), id);
     }
 }
